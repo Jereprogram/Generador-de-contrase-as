@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Contraseñas Seguras</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Generador de Contraseñas Seguras</h2>
+    <label for="longitud">Longitud de la contraseña (mínimo 8):</label>
+    <input type="number" id="longitud" min="8" value="12">
+    <button onclick="generarContraseña()">Generar</button>
+    <h3 id="resultado"></h3>
+  </div>
+  
+  <!-- Mueve el script aquí, justo antes del cierre del body -->
+  <script>
+    function generarContraseña() {
+      let longitud = parseInt(document.getElementById("longitud").value);
+      if (longitud < 8) {
+        document.getElementById("resultado").innerText = "Error: La longitud debe ser al menos 8.";
+        return;
+      }
+      
+      const mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const minusculas = "abcdefghijklmnopqrstuvwxyz";
+      const numeros = "0123456789";
+      const especiales = "!@#$%^&*()";
+      const todos = mayusculas + minusculas + numeros + especiales;
+      
+      let contraseña = [
+        mayusculas[Math.floor(Math.random() * mayusculas.length)],
+        minusculas[Math.floor(Math.random() * minusculas.length)],
+        numeros[Math.floor(Math.random() * numeros.length)],
+        especiales[Math.floor(Math.random() * especiales.length)]
+      ];
+      
+      for (let i = 4; i < longitud; i++) {
+        contraseña.push(todos[Math.floor(Math.random() * todos.length)]);
+      }
+      
+      contraseña = contraseña.sort(() => Math.random() - 0.5).join("");
+      
+      document.getElementById("resultado").innerHTML = "<strong>Contraseña generada:</strong> " + contraseña;
+    }
+  </script>
+</body>
+</html>
